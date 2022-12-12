@@ -42,3 +42,7 @@ volumes:
 1. Create a Docker Hub account if you don't have one already. It's free, and you can find the instructions [here](https://docs.docker.com/docker-hub/).
 2. Push the image to Docker Hub. You can find the instructions [here](https://docs.docker.com/docker-hub/repos/).
 3. Provide the link to the image in the README.md file.
+
+## 6. URL of image pushed to Docker Hub
+
+https://hub.docker.com/r/neyobrainy/devops-internship-goapp
