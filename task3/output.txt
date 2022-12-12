@@ -1,0 +1,6 @@
+NAME                                 READY   STATUS    RESTARTS      AGE
+go-app-deployment-74cbf95d77-665f5   1/1     Running   0             112m
+nginx                                1/1     Running   1 (33h ago)   5d21h
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+go-app-service   NodePort    10.106.138.24   <none>        80:31213/TCP   117m
+kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP        5d22h

@@ -1,0 +1,83 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app-service
+  labels:
+    app: go-app
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+      app: go-app
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: go-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-app
+  template:
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+        - name: go-app-container
+          image: neyobrainy/devops-internship-goapp:latest
+          command: [ "/bin/sh", "-c", "ls /etc/config/" ]
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_COLOR
+              valueFrom:
+                configMapKeyRef:
+                  name: go-app-configmap
+                  key: APP_COLOR
+
+            - name: SUPER_SECRET_ENV_VAR
+              valueFrom:
+                secretKeyRef:
+                  name: go-app-secrets
+                  key: SUPER_SECRET_VALUE
+
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config     
+      volumes:
+        - name: config-volume
+          configMap:
+            name: go-app-configmap  
+      
+              
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-app-configmap
+data:
+  APP_COLOR: blue
+  APP_MODIFICATION_TIME: 2021-01-01T00:00:00Z
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: go-app-secrets
+type: Opaque
+data:
+  SUPER_SECRET_VALUE: MTIzNDU2Nzg5MA==
