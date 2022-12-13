@@ -24,5 +24,15 @@ pipeline {
                 bat 'make test'
             }
         }
+
+        stage('push') {
+            agent any
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Docker-Hub', passwordVariable: 'Docker-HubPassword', usernameVariable: 'Docker-HubUser')]) {
+                bat "docker login -u ${env.Docker-HubUser} -p ${env.Docker-HubPassword}"
+                bat 'docker push neyobrainy/devops-internship-goapp'
+                }
+            }
+        }
     }
 }
