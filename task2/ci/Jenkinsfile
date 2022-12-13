@@ -12,11 +12,16 @@ pipeline {
     }
 
     stages {
-        stage("build-app") {
+        stage("build") {
             steps {
                 echo 'BUILD PROCESS STARTED'
-                sh 'make build'
+                bat 'make build'
             }
         }
+        stage("test") {
+            steps {
+                echo 'UNIT TEST INITIATED'
+                bat 'make test'
+            }
     }
 }
