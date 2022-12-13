@@ -23,5 +23,6 @@ pipeline {
                 echo 'UNIT TEST INITIATED'
                 bat 'make test'
             }
+        }
     }
 }
