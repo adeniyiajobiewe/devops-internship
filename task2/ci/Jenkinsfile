@@ -15,13 +15,13 @@ pipeline {
         stage("build") {
             steps {
                 echo 'BUILD PROCESS STARTED'
-                bat 'mingw32-make build'
+                sh 'make build'
             }
         }
         stage("test") {
             steps {
                 echo 'UNIT TEST INITIATED'
-                bat 'mingw32-make test'
+                sh 'make test'
             }
         }
 
@@ -29,8 +29,8 @@ pipeline {
             agent any
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Docker-Hub', passwordVariable: 'Docker-HubPassword', usernameVariable: 'Docker-HubUser')]) {
-                bat "docker login -u ${env.Docker-HubUser} -p ${env.Docker-HubPassword}"
-                bat 'docker push neyobrainy/devops-internship-goapp'
+                sh "docker login -u ${env.Docker-HubUser} -p ${env.Docker-HubPassword}"
+                sh 'docker push neyobrainy/devops-internship-goapp'
                 }
             }
         }
